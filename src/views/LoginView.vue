@@ -23,12 +23,23 @@
         </div>
 
         <div class="Login__block Login__button">
-          <el-button size="large">登入</el-button>
+          <el-button size="large" @click="login">登入</el-button>
         </div>
       </div>
     </div>
   </main>
 </template>
+
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const login = () => {
+  console.log("login");
+  router.push({ name: "PageData" });
+};
+</script>
 
 <style lang="scss">
 .Login {
