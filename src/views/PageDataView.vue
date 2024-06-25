@@ -1,5 +1,44 @@
 <template>
   <div class="PageData">
-    <h1>This is an page data page</h1>
+    <h1>page data setting</h1>
+
+    <el-select v-model="selectedPage">
+      <el-option
+        v-for="page in pages"
+        :key="page"
+        :label="page"
+        :value="page"
+      ></el-option>
+    </el-select>
+
+    <component :is="selectedPageEditor"></component>
   </div>
 </template>
+
+<script setup>
+import { computed, ref } from "vue"
+import HomeEditor from "@/components/Uptone/HomeEditor.vue";
+import AboutEditor from "@/components/Uptone/AboutEditor.vue";
+
+const pages = ["Home", "About", "Teacher", "class"]
+
+const selectedPage = ref(null)
+
+const pageEditors = {
+  Home: HomeEditor,
+  About: AboutEditor,
+  Teacher: "TeacherEditor",
+  class: "classEditor",
+}
+
+const selectedPageEditor = computed(()=> {
+  return pageEditors[selectedPage.value]
+})
+</script>
+
+
+<style>
+.PageData {
+  padding: 20px;
+}
+</style>
