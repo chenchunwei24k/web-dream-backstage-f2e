@@ -1,9 +1,9 @@
 <template>
-    <div class="AboutEditor">
-        <h2>About</h2>
+    <div class="TeacherEditor">
+        <h2>Teacher</h2>
 
-        <div class="AboutEditor__block">
-            <div class="AboutEditor__title">banner</div>
+        <div class="TeacherEditor__block">
+            <div class="TeacherEditor__title">img</div>
             <el-upload 
                 drag 
                 accept="image/*" 
@@ -11,7 +11,7 @@
                 :on-change="handleBannerChange"
                 :show-file-list="false"
             >
-                <img class="AboutEditor__previewImg" v-if="bannerImg" :src="bannerImg">
+                <img class="TeacherEditor__previewImg" v-if="bannerImg" :src="bannerImg">
                 <template v-else>
                     <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                     <div class="el-upload__text">
@@ -21,11 +21,31 @@
             </el-upload>
         </div>
 
-        <div class="AboutEditor__block">
-            <div class="AboutEditor__title">introduction</div>
+        <div class="TeacherEditor__block">
+            <div class="TeacherEditor__title">name</div>
             <el-input 
-                class="AboutEditor__input" 
-                placeholder="please input introduction" 
+                class="TeacherEditor__input" 
+                placeholder="please input name" 
+                type="textarea"
+                :row="5"
+                ></el-input>
+        </div>
+
+        <div class="TeacherEditor__block">
+            <div class="TeacherEditor__title">description</div>
+            <el-input 
+                class="TeacherEditor__input" 
+                placeholder="please input name" 
+                type="textarea"
+                :row="5"
+                ></el-input>
+        </div>
+
+        <div class="TeacherEditor__block">
+            <div class="TeacherEditor__title">major</div>
+            <el-input 
+                class="TeacherEditor__input" 
+                placeholder="please input name" 
                 type="textarea"
                 :row="5"
                 ></el-input>
@@ -45,7 +65,7 @@ const handleBannerChange = (file) => {
 </script>
 
 <style lang="scss">
-.AboutEditor {
+.TeacherEditor {
     &__block {
         margin-bottom: 20px;
     }

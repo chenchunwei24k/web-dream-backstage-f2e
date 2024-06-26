@@ -92,19 +92,19 @@ import { ref } from "vue"
 
 const bannerImg = ref(null)
 
-const handleBannerChange = (file, files) => {
+const handleBannerChange = (file) => {
     bannerImg.value = URL.createObjectURL(file.raw)
 }
 
 const logoImg = ref(null)
 
-const handleLogoChange = (file, files) => {
+const handleLogoChange = (file) => {
     logoImg.value = URL.createObjectURL(file.raw)
 }
 
 const associationImg = ref(null)
 
-const handleAssociationChange = (file, files) => {
+const handleAssociationChange = (file) => {
     associationImg.value = URL.createObjectURL(file.raw)
 }
 </script>

@@ -19,6 +19,8 @@
 import { computed, ref } from "vue"
 import HomeEditor from "@/components/Uptone/HomeEditor.vue";
 import AboutEditor from "@/components/Uptone/AboutEditor.vue";
+import TeacherEditor from "@/components/Uptone/TeacherEditor.vue";
+import ClassEditor from "@/components/Uptone/ClassEditor.vue";
 
 const pages = ["Home", "About", "Teacher", "class"]
 
@@ -27,8 +29,8 @@ const selectedPage = ref(null)
 const pageEditors = {
   Home: HomeEditor,
   About: AboutEditor,
-  Teacher: "TeacherEditor",
-  class: "classEditor",
+  Teacher: TeacherEditor,
+  class: ClassEditor,
 }
 
 const selectedPageEditor = computed(()=> {
