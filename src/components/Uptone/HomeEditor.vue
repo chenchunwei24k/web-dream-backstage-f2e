@@ -21,6 +21,8 @@
             </el-upload>
         </div>
 
+        <el-divider></el-divider>
+
         <div class="HomeEditor__block">
             <div class="HomeEditor__title">logo</div>
             <el-upload 
@@ -45,6 +47,8 @@
             <el-input v-model="logoDescription[0]" class="HomeEditor__input" placeholder="please input logo description first part"></el-input>
             <el-input v-model="logoDescription[1]" class="HomeEditor__input" placeholder="please input logo description second part"></el-input>
         </div>
+
+        <el-divider></el-divider>
 
         <div class="HomeEditor__block">
             <div class="HomeEditor__title">association</div>
@@ -76,6 +80,8 @@
 
             <el-button @click="addAssociation">add association</el-button>
         </div>
+        
+        <el-divider></el-divider>
 
         <div class="HomeEditor__block">
             <div class="HomeEditor__title">class</div>

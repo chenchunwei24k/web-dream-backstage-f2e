@@ -74,10 +74,14 @@
                     type="textarea"
                     :row="5"
                     ></el-input>
+
+                <el-divider></el-divider>
             </div>
         </div>
 
         <el-button @click="addGroupClass">Add Group Class</el-button>
+
+        <el-divider :style="{ borderWidth: '3px' }"></el-divider>
 
         <h3>Private lesson</h3>
 
@@ -132,10 +136,14 @@
                     type="textarea"
                     :row="5"
                     ></el-input>
+
+                <el-divider></el-divider>
             </div>
         </div>
 
         <el-button @click="addPrivateLesson">Add Private Lesson</el-button>
+
+        <el-divider :style="{ borderWidth: '3px' }"></el-divider>
 
         <h3>Special Program</h3>
 
@@ -191,6 +199,8 @@
                     :row="5"
                     ></el-input>
             </div>
+
+            <el-divider></el-divider>
         </div>
 
         <el-button @click="addSpecialProgram">Add Special Program</el-button>

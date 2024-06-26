@@ -59,6 +59,8 @@
 
                 <el-button @click="addMajor(teacherIndex)">Add Major</el-button>
             </div>
+
+            <el-divider></el-divider>
         </div>
 
         <el-button @click="addTeacher">Add Teacher</el-button>
