@@ -24,6 +24,7 @@
         <div class="AboutEditor__block">
             <div class="AboutEditor__title">introduction</div>
             <el-input 
+                v-model="introduction"
                 class="AboutEditor__input" 
                 placeholder="please input introduction" 
                 type="textarea"
@@ -42,6 +43,8 @@ const bannerImg = ref(null)
 const handleBannerChange = (file) => {
     bannerImg.value = URL.createObjectURL(file.raw)
 }
+
+const introduction = ref('')
 </script>
 
 <style lang="scss">
