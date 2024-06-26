@@ -31,6 +31,10 @@
                 :row="5"
                 ></el-input>
         </div>
+        
+        <div class="ClassEditor__save">
+            <el-button type="primary">Save</el-button>
+        </div>
     </div>
 </template>
 

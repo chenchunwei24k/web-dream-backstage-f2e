@@ -96,6 +96,11 @@
 
             <el-button @click="addClass">add class</el-button>
         </div>
+
+
+        <div class="ClassEditor__save">
+            <el-button type="primary">Save</el-button>
+        </div>
     </div>
 </template>
 
