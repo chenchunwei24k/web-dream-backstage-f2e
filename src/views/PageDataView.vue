@@ -17,17 +17,17 @@
 
 <script setup>
 import { computed, ref } from "vue"
-import HomeEditor from "@/components/Uptone/HomeEditor.vue";
+import ClassesType from "@/components/Uptone/ClassesType.vue";
 import TeacherEditor from "@/components/Uptone/TeacherEditor.vue";
 import ClassEditor from "@/components/Uptone/ClassEditor.vue";
 import AssociationList from "@/components/Uptone/AssociationList.vue";
 
-const pages = ["Home", "Association", "Teacher", "class"]
+const pages = ["ClassesType", "Association", "Teacher", "class"]
 
 const selectedPage = ref(null)
 
 const pageComponents = {
-  Home: HomeEditor,
+  ClassesType: ClassesType,
   Association: AssociationList,
   Teacher: TeacherEditor,
   class: ClassEditor,
