@@ -21,13 +21,15 @@
 
         <div class="ClassesEditor__block">
             <div class="ClassesEditor__title">classesType</div>
-            <el-input 
-                v-model="classes.classesType"
-                class="ClassesEditor__input" 
-                placeholder="please input name" 
-                type="textarea"
-                :row="5"
-                ></el-input>
+            
+            <el-select v-model="classes.classesType">
+                <el-option
+                    v-for="classesType in classesTypeList"
+                    :key="classesType.type"
+                    :label="classesType.type"
+                    :value="classesType.type"
+                ></el-option>
+            </el-select>
         </div>
 
         <div class="ClassesEditor__block">
@@ -35,32 +37,41 @@
             <el-input 
                 v-model="classes.title"
                 class="ClassesEditor__input" 
-                placeholder="please input name" 
-                type="textarea"
-                :row="5"
+                placeholder="please input title"
                 ></el-input>
         </div>
 
         <div class="ClassesEditor__block">
             <div class="ClassesEditor__title">time</div>
-            <el-input 
+            <el-date-picker
                 v-model="classes.time"
-                class="ClassesEditor__input" 
-                placeholder="please input name" 
-                type="textarea"
-                :row="5"
-                ></el-input>
+                type="daterange"
+                start-placeholder="Start Date"
+                end-placeholder="End Date"
+                value-format="x"
+            />
         </div>
 
         <div class="ClassesEditor__block">
             <div class="ClassesEditor__title">price</div>
-            <el-input 
-                v-model="classes.price"
-                class="ClassesEditor__input" 
-                placeholder="please input name" 
-                type="textarea"
-                :row="5"
-            ></el-input>
+            <el-input
+                v-model="classes.price.price"
+                style="max-width: 600px"
+                placeholder="Please input"
+                class="input-with-select"
+                type="number"
+            >
+            <template #prepend>
+                <el-select v-model="classes.price.currency" style="width: 115px">
+                    <el-option v-for="currency in currencyOptions" :label="currency.label" :value="currency.value" />
+                </el-select>
+            </template>
+            <template #append>
+                <el-select v-model="classes.price.priceFrequency" style="width: 115px">
+                    <el-option v-for="priceFrequency in priceFrequencyOptions" :label="priceFrequency.label" :value="priceFrequency.value" />
+                </el-select>
+            </template>
+            </el-input>
         </div>
 
         <div class="ClassesEditor__block">
@@ -68,9 +79,7 @@
             <el-input 
                 v-model="classes.ages"
                 class="ClassesEditor__input" 
-                placeholder="please input name" 
-                type="textarea"
-                :row="5"
+                placeholder="please input ages"
             ></el-input>
         </div>
 
@@ -84,6 +93,7 @@
 <script setup>
 import { ref } from "vue"
 import { useClassesStore } from "@/stores/classes"
+import { useClassesTypeStore } from "@/stores/classesType";
 
 const props = defineProps({
     class: {
@@ -105,14 +115,28 @@ const props = defineProps({
     },
 })
 
+const currencyOptions = [
+    { label: 'USD', value: 'USD' },
+    { label: 'EUR', value: 'EUR' },
+    { label: 'CNY', value: 'CNY' },
+]
+
+const priceFrequencyOptions = [
+    { label: 'per class', value: 'CLASSES' },
+    { label: 'per minute', value: 'MINUTES' },
+    { label: 'per day', value: 'DAYS' },
+    { label: 'per month', value: 'MONTHS' },
+    { label: 'per year', value: 'YEARS' }
+]
+
 const { postClasses } = useClassesStore();
+const { classesTypeList } = useClassesTypeStore();
 
 const classes = ref({
     img: props.class.img,
     classesType: props.class.classesType,
     title: props.class.title,
-    startTime: props.class.startTime,
-    endTime: props.class.endTime,
+    time: [props.class.startTime, props.class.endTime],
     price: props.class.price,
     ages: props.class.ages
 })
@@ -127,8 +151,8 @@ const save = async () => {
             img: classes.value.img,
             classesType: classes.value.classesType,
             title: classes.value.title,
-            startTime: classes.value.startTime,
-            endTime: classes.value.endTime,
+            startTime: classes.value.time[0],
+            endTime: classes.value.time[1],
             price: classes.value.price,
             ages: classes.value.ages
         })
