@@ -11,14 +11,14 @@
         <div class="Login__block">
           <div class="Login__title">帳號</div>
           <div class="Login__input">
-            <el-input placeholder="請輸入帳號"></el-input>
+            <el-input placeholder="請輸入帳號" v-model="username"></el-input>
           </div>
         </div>
 
         <div class="Login__block">
           <div class="Login__title">密碼</div>
           <div class="Login__input">
-            <el-input type="password" placeholder="請輸入密碼"></el-input>
+            <el-input type="password" placeholder="請輸入密碼" v-model="password"></el-input>
           </div>
         </div>
 
@@ -32,12 +32,21 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { apiLogin } from "@/apis/auth";
+import { ref } from "vue";
 
 const router = useRouter();
 
-const login = () => {
-  console.log("login");
-  router.push({ name: "PageData" });
+const username = ref('');
+const password = ref('');
+
+const login = async () => {
+  try {
+    await apiLogin(username.value, password.value);
+    router.push({ name: "PageData" });
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
 
