@@ -19,10 +19,10 @@
 import { computed, ref } from "vue"
 import ClassesType from "@/components/Uptone/ClassesType.vue";
 import TeacherEditor from "@/components/Uptone/TeacherEditor.vue";
-import ClassEditor from "@/components/Uptone/ClassEditor.vue";
+import ClassesList from "@/components/Uptone/ClassesList.vue";
 import AssociationList from "@/components/Uptone/AssociationList.vue";
 
-const pages = ["ClassesType", "Association", "Teacher", "class"]
+const pages = ["ClassesType", "Association", "Teacher", "Class"]
 
 const selectedPage = ref(null)
 
@@ -30,7 +30,7 @@ const pageComponents = {
   ClassesType: ClassesType,
   Association: AssociationList,
   Teacher: TeacherEditor,
-  class: ClassEditor,
+  Class: ClassesList,
 }
 
 const selectedPageComponent = computed(()=> {

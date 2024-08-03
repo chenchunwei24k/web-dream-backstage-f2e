@@ -69,8 +69,8 @@ const description = ref(props.association.description);
 const save = async () => {
     try {
         await postAssociation({
-            img: bannerImg.value,
-            description: description.value
+            imageURL: bannerImg.value,
+            contents: description.value
         })
 
         emit('save')
