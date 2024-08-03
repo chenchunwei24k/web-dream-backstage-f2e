@@ -11,30 +11,30 @@
       ></el-option>
     </el-select>
 
-    <component :is="selectedPageEditor"></component>
+    <component :is="selectedPageComponent"></component>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue"
 import HomeEditor from "@/components/Uptone/HomeEditor.vue";
-import AboutEditor from "@/components/Uptone/AboutEditor.vue";
 import TeacherEditor from "@/components/Uptone/TeacherEditor.vue";
 import ClassEditor from "@/components/Uptone/ClassEditor.vue";
+import AssociationList from "@/components/Uptone/AssociationList.vue";
 
-const pages = ["Home", "About", "Teacher", "class"]
+const pages = ["Home", "Association", "Teacher", "class"]
 
 const selectedPage = ref(null)
 
-const pageEditors = {
+const pageComponents = {
   Home: HomeEditor,
-  About: AboutEditor,
+  Association: AssociationList,
   Teacher: TeacherEditor,
   class: ClassEditor,
 }
 
-const selectedPageEditor = computed(()=> {
-  return pageEditors[selectedPage.value]
+const selectedPageComponent = computed(()=> {
+  return pageComponents[selectedPage.value]
 })
 </script>
 
