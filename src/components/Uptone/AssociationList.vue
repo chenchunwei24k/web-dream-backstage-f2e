@@ -6,11 +6,20 @@
             <div class="AssociationList__association" v-if="!association.isEdit">
                 <div class="AssociationList__block">
                     <div class="AssociationList__title">association image 
-                        <el-button type="danger" @click="deleteAssociation(association.id)">
-                            <el-icon>
-                                <Delete />
-                            </el-icon>
-                        </el-button>
+                        <div>
+                            <el-button type="primary" @click="() => association.isEdit = true">
+                                <el-icon>
+                                    <Edit />
+                                </el-icon>
+                            </el-button>
+
+
+                            <el-button type="danger" @click="deleteAssociation(association.id)">
+                                <el-icon>
+                                    <Delete />
+                                </el-icon>
+                            </el-button>
+                        </div>
                     </div>
                     <div>
                         <img class="AssociationList__previewImg" :src="association.img">
@@ -26,7 +35,7 @@
             </div>
 
             <div class="AssociationList__association" v-else>
-                <AssociationEditor :association="association" />
+                <AssociationEditor :association="association" :is-edit="association.isEdit" @save="() => association.isEdit = false"  />
             </div>
 
             <el-divider></el-divider>

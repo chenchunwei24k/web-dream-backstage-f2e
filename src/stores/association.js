@@ -1,35 +1,43 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { apiGetAssociation, apiPostAssociation, apiDeleteAssociation } from '@/apis/association'
+import { apiGetAssociation, apiPostAssociation, apiPutAssociation, apiDeleteAssociation } from '@/apis/association'
 
 export const useAssociationStore = defineStore('association', () => {
   const associationList = ref([])
   async function getAssociation() {
     const response = await apiGetAssociation()
 
-    associationList.value = response
+    associationList.value = response.map(association => {
+      return {
+        ...association,
+        isEdit: false
+      }
+    })
   }
 
   async function postAssociation(association) {
-    const response = await apiPostAssociation(association)
+    await apiPostAssociation(association)
 
-    if (response) {
-      getAssociation()
-    }
+    await getAssociation()
+  }
+
+  async function updateAssociation(association) {
+    await apiPutAssociation(association)
+
+    await getAssociation()
   }
 
   async function deleteAssociation(id) {
-    const response = await apiDeleteAssociation(id)
+    await apiDeleteAssociation(id)
 
-    if (response) {
-      getAssociation()
-    }
+    await getAssociation()
   }
 
   return { 
     associationList: computed(() => associationList.value),
     getAssociation,
     postAssociation,
+    updateAssociation,
     deleteAssociation
    }
 })

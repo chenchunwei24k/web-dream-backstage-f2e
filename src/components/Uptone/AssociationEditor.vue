@@ -40,7 +40,7 @@
 
 
 <script setup>
-import { ref } from "vue";
+import { watch, ref } from "vue";
 import { useAssociationStore } from "@/stores/association";
 
 const props = defineProps({
@@ -52,11 +52,15 @@ const props = defineProps({
             description: ''
         })
     },
+    isEdit: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const emit = defineEmits(['save'])
 
-const { postAssociation } = useAssociationStore();
+const { postAssociation, updateAssociation } = useAssociationStore();
 
 const bannerImg = ref(null)
 
@@ -68,16 +72,30 @@ const description = ref(props.association.description);
 
 const save = async () => {
     try {
-        await postAssociation({
-            imageURL: bannerImg.value,
-            contents: description.value
-        })
+        if (props.isEdit) {
+            await updateAssociation({
+                id: props.association.id,
+                imageURL: bannerImg.value,
+                contents: description.value
+            })
+        } else {
+            await postAssociation({
+                imageURL: bannerImg.value,
+                contents: description.value
+            })
+        }
 
         emit('save')
     } catch (error) {
         console.error(error)
     }
 }
+
+watch(() => props.isEdit, () => {
+    if (props.isEdit) {
+        description.value = props.association.contents
+    }
+}, { immediate: true })
 </script>
 
 <style lang="scss">

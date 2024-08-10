@@ -18,6 +18,15 @@ export const apiPostAssociation = async (association) => {
     }
 }
 
+export const apiPutAssociation = async (association) => {
+    try {
+        const response = await axios.put('/api/homeAssociation', association)
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export const apiDeleteAssociation = async (id) => {
     try {
         const response = await axios.delete(`/api/homeAssociation/${id}`)
