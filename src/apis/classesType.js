@@ -18,9 +18,9 @@ export const apiPostClassesType = async (classesType) => {
     }
 }
 
-export const apiPutClassesType = async () => {
+export const apiPutClassesType = async (classesType) => {
     try {
-        const response = await axios.put('/api/classesType')
+        const response = await axios.put('/api/classesType', classesType)
         return response.data
     } catch (error) {
         throw error

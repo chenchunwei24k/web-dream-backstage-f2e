@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { apiGetClassesType, apiPostClassesType, apiDeleteClassesType } from '@/apis/classesType'
+import { apiGetClassesType, apiPostClassesType, apiPutClassesType, apiDeleteClassesType } from '@/apis/classesType'
 
 export const useClassesTypeStore = defineStore('classesType', () => {
   const classesTypeList = ref([])
@@ -16,6 +16,12 @@ export const useClassesTypeStore = defineStore('classesType', () => {
     await getClassesType()
   }
 
+  async function updateClassesType(classType) {
+    await apiPutClassesType(classType)
+
+    await getClassesType()
+  }
+
   async function deleteClassesType(id) {
     await apiDeleteClassesType(id)
 
@@ -26,6 +32,7 @@ export const useClassesTypeStore = defineStore('classesType', () => {
     classesTypeList: computed(() => classesTypeList.value),
     getClassesType,
     postClassesType,
+    updateClassesType,
     deleteClassesType
    }
 })

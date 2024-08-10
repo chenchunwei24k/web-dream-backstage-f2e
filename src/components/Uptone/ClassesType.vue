@@ -6,11 +6,19 @@
             <div class="ClassesType__classesType" v-if="!classesType.isEdit">
                 <div class="ClassesType__block">
                     <div class="ClassesType__title">type
-                        <el-button type="danger" @click="deleteClassesType(classesType.type)">
-                            <el-icon>
-                                <Delete />
-                            </el-icon>
-                        </el-button>
+                        <div>
+                            <el-button type="primary" @click="() => classesType.isEdit = true">
+                                <el-icon>
+                                    <Edit />
+                                </el-icon>
+                            </el-button>
+
+                            <el-button type="danger" @click="deleteClassesType(classesType.type)">
+                                <el-icon>
+                                    <Delete />
+                                </el-icon>
+                            </el-button>
+                        </div>
                     </div>
                     <div>
                         {{ classesType.type }}
@@ -26,7 +34,7 @@
             </div>
 
             <div v-else>
-                <ClassesTypeEditor :classesType="classesType" />
+                <ClassesTypeEditor :classesType="classesType" :isEdit="classesType.isEdit" @save="() => classesType.isEdit = false" />
             </div>
 
             <el-divider />

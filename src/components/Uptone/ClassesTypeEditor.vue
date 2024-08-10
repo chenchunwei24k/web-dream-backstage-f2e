@@ -24,7 +24,7 @@
 
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useClassesTypeStore } from "@/stores/classesType";
 
 const props = defineProps({
@@ -36,11 +36,15 @@ const props = defineProps({
             content: []
         })
     },
+    isEdit: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const emit = defineEmits(['save'])
 
-const { postClassesType } = useClassesTypeStore();
+const { postClassesType, updateClassesType } = useClassesTypeStore();
 
 const type = ref(props.classesType.type);
 
@@ -52,16 +56,31 @@ const addContent = () => {
 
 const save = async () => {
     try {
-        await postClassesType({
+        if (props.isEdit) {
+            await updateClassesType({
+                id: props.classesType.id,
+                type: type.value,
+                content: content.value
+            })
+        } else {
+            await postClassesType({
             type: type.value,
             content: content.value
         })
+        }
 
         emit('save')
     } catch (error) {
         console.error(error)
     }
 }
+
+watch(() => props.isEdit, () => {
+    if (props.isEdit) {
+        type.value = props.classesType.type
+        content.value = props.classesType.content
+    }
+}, { immediate: true })
 </script>
 
 <style lang="scss">
