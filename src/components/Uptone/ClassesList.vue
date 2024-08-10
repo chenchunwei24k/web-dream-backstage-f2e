@@ -1,57 +1,72 @@
 <template>
-    <div class="ClassesEditor">
+    <div class="ClassesList">
         <h2>Class</h2>
         <div v-for="(classes, classesIndex) in classesStore.classesList" :key="classes.id">
-            <div class="ClassesEditor__block">
-                <div class="ClassesEditor__title">img</div>
+            <div class="ClassesList__classes">
+            <div class="ClassesList__block">
+                <div class="ClassesList__title">img
+                    <el-button type="danger" @click="deleteClasses(classes.id)">
+                        <el-icon>
+                            <Delete />
+                        </el-icon>
+                    </el-button>
+                </div>
                 <div>
-                    <img class="ClassesEditor__previewImg" v-if="classes.img" :src="classes.img">
+                    <img class="ClassesList__previewImg" v-if="classes.img" :src="classes.img">
                 </div>
             </div>
 
-            <div class="ClassesEditor__block">
-                <div class="ClassesEditor__title">classesType</div>
+            <div class="ClassesList__block">
+                <div class="ClassesList__title">classesType</div>
                 <div>
                     {{ classes.classesType }}
                 </div>
             </div>
 
-            <div class="ClassesEditor__block">
-                <div class="ClassesEditor__title">title</div>
+            <div class="ClassesList__block">
+                <div class="ClassesList__title">title</div>
                 <div>
                     {{ classes.title }}
                 </div>
             </div>
 
-            <div class="ClassesEditor__block">
-                <div class="ClassesEditor__title">time</div>
+            <div class="ClassesList__block">
+                <div class="ClassesList__title">time</div>
 
                 <div>
-                    {{ classes.startTime }} ~ {{ classes.endTime }}
+                    {{ dateFormat(classes.startTime) }} ~ {{ dateFormat(classes.endTime) }}
                 </div>
             </div>
 
-            <div class="ClassesEditor__block">
-                <div class="ClassesEditor__title">price</div>
+            <div class="ClassesList__block">
+                <div class="ClassesList__title">price</div>
                 <div>
-                    {{ classes.price }}
+                    {{ classes.price.currency }} {{ classes.price.price }}
+                </div>
+                <div class="ClassesList__frequency">
+                    <div v-for="frequency in classes.price.priceFrequency" :key="frequency">
+                        {{ frequency }}
+                    </div>
                 </div>
             </div>
 
-            <div class="ClassesEditor__block">
-                <div class="ClassesEditor__title">ages</div>
+            <div class="ClassesList__block">
+                <div class="ClassesList__title">ages</div>
                 <div>
                     {{ classes.ages }}
                 </div>
             </div>
         </div>
 
+            <el-divider />
+        </div>
+
 
         <div v-if="!isAdding">
-            <el-button type="primary" @click="toggleClassesEditor">Add Classes</el-button>
+            <el-button type="primary" @click="toggleClassesList">Add Classes</el-button>
         </div>
         <div v-else>
-            <ClassesEditor @save="toggleClassesEditor" />
+            <ClassesEditor @save="toggleClassesList" />
         </div>
     </div>
 </template>
@@ -61,13 +76,22 @@
 import { ref, onMounted } from "vue"
 import ClassesEditor from "./ClassesEditor.vue";
 import { useClassesStore } from "@/stores/classes"
+import moment from "moment";
 
 const classesStore = useClassesStore();
 
 const isAdding = ref(false);
 
-const toggleClassesEditor = () => {
+const toggleClassesList = () => {
     isAdding.value = !isAdding.value;
+}
+
+const deleteClasses = async (id) => {
+    await classesStore.deleteClasses(id);
+}
+
+const dateFormat = (date) => {
+    return moment(date).format("YYYY/MM/DD HH:mm:ss");
 }
 
 onMounted(async () => {
@@ -76,7 +100,14 @@ onMounted(async () => {
 </script>
 
 <style lang="scss">
-.ClassesEditor {
+.ClassesList {
+    &__classes {
+        padding: 10px;
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
     &__block {
         margin-bottom: 20px;
     }
@@ -85,6 +116,13 @@ onMounted(async () => {
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__frequency {
+        display: flex;
+        gap: 10px;
     }
 
     &__input {

@@ -3,9 +3,15 @@
         <h2>ClassesType</h2>
 
         <div v-for="classesType in classesTypeStore.classesTypeList" :key="classesType.id">
-            <div v-if="!classesType.isEdit">
+            <div class="ClassesType__classesType" v-if="!classesType.isEdit">
                 <div class="ClassesType__block">
-                    <div class="ClassesType__title">type</div>
+                    <div class="ClassesType__title">type
+                        <el-button type="danger" @click="deleteClassesType(classesType.type)">
+                            <el-icon>
+                                <Delete />
+                            </el-icon>
+                        </el-button>
+                    </div>
                     <div>
                         {{ classesType.type }}
                     </div>
@@ -22,6 +28,8 @@
             <div v-else>
                 <ClassesTypeEditor :classesType="classesType" />
             </div>
+
+            <el-divider />
         </div>
 
         <div v-if="!isAdding">
@@ -46,6 +54,10 @@ const toggleClassesTypeEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
+const deleteClassesType = async (id) => {
+    await classesTypeStore.deleteClassesType(id);
+}
+
 onMounted(async () => {
    await classesTypeStore.getClassesType();
 })
@@ -53,6 +65,13 @@ onMounted(async () => {
 
 <style lang="scss">
 .ClassesType {
+    &__classesType {
+        padding: 10px;
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
     &__block {
         margin-bottom: 20px;
     }
@@ -61,6 +80,8 @@ onMounted(async () => {
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
     }
 
     &__previewImg {

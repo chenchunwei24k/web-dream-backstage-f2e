@@ -3,9 +3,15 @@
         <h2>Association</h2>
 
         <div v-for="association in associationStore.associationList" :key="association.id">
-            <div v-if="!association.isEdit">
+            <div class="AssociationList__association" v-if="!association.isEdit">
                 <div class="AssociationList__block">
-                    <div class="AssociationList__title">association image</div>
+                    <div class="AssociationList__title">association image 
+                        <el-button type="danger" @click="deleteAssociation(association.id)">
+                            <el-icon>
+                                <Delete />
+                            </el-icon>
+                        </el-button>
+                    </div>
                     <div>
                         <img class="AssociationList__previewImg" :src="association.img">
                     </div>
@@ -19,9 +25,11 @@
                 </div>
             </div>
 
-            <div v-else>
+            <div class="AssociationList__association" v-else>
                 <AssociationEditor :association="association" />
             </div>
+
+            <el-divider></el-divider>
         </div>
 
         <div v-if="!isAdding">
@@ -46,6 +54,10 @@ const toggleAssociationEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
+const deleteAssociation = async (id) => {
+    await associationStore.deleteAssociation(id);
+}
+
 onMounted(async () => {
     await associationStore.getAssociation();
 })
@@ -53,6 +65,13 @@ onMounted(async () => {
 
 <style lang="scss">
 .AssociationList {
+    &__association {
+        padding: 10px;
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
     &__block {
         margin-bottom: 20px;
     }
@@ -61,6 +80,8 @@ onMounted(async () => {
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
     }
 
     &__previewImg {

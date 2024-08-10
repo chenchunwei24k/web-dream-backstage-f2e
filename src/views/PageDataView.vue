@@ -22,7 +22,7 @@ import TeacherEditor from "@/components/Uptone/TeacherEditor.vue";
 import ClassesList from "@/components/Uptone/ClassesList.vue";
 import AssociationList from "@/components/Uptone/AssociationList.vue";
 
-const pages = ["ClassesType", "Association", "Teacher", "Class"]
+const pages = ["ClassesType", "Association", "Class"]
 
 const selectedPage = ref(null)
 
