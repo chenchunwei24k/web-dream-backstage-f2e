@@ -2,62 +2,75 @@
     <div class="ClassesList">
         <h2>Class</h2>
         <div v-for="(classes, classesIndex) in classesStore.classesList" :key="classes.id">
-            <div class="ClassesList__classes">
-            <div class="ClassesList__block">
-                <div class="ClassesList__title">img
-                    <el-button type="danger" @click="deleteClasses(classes.id)">
-                        <el-icon>
-                            <Delete />
-                        </el-icon>
-                    </el-button>
-                </div>
-                <div>
-                    <img class="ClassesList__previewImg" v-if="classes.img" :src="classes.img">
-                </div>
-            </div>
+            <div class="ClassesList__classes" v-if="!classes.isEdit">
+                <div class="ClassesList__block">
+                    <div class="ClassesList__title">img
+                        <div>
+                            <el-button type="primary" @click="() => classes.isEdit = true">
+                                <el-icon>
+                                    <Edit />
+                                </el-icon>
+                            </el-button>
 
-            <div class="ClassesList__block">
-                <div class="ClassesList__title">classesType</div>
-                <div>
-                    {{ classes.classesType }}
+                            <el-button type="danger" @click="deleteClasses(classes.id)">
+                                <el-icon>
+                                    <Delete />
+                                </el-icon>
+                            </el-button>
+                        </div>
+                    </div>
+                    <div>
+                        <img class="ClassesList__previewImg" v-if="classes.img" :src="classes.img">
+                    </div>
                 </div>
-            </div>
 
-            <div class="ClassesList__block">
-                <div class="ClassesList__title">title</div>
-                <div>
-                    {{ classes.title }}
+                <div class="ClassesList__block">
+                    <div class="ClassesList__title">classesType</div>
+                    <div>
+                        {{ classes.classesType }}
+                    </div>
                 </div>
-            </div>
 
-            <div class="ClassesList__block">
-                <div class="ClassesList__title">time</div>
-
-                <div>
-                    {{ dateFormat(classes.startTime) }} ~ {{ dateFormat(classes.endTime) }}
+                <div class="ClassesList__block">
+                    <div class="ClassesList__title">title</div>
+                    <div>
+                        {{ classes.title }}
+                    </div>
                 </div>
-            </div>
 
-            <div class="ClassesList__block">
-                <div class="ClassesList__title">price</div>
-                <div>
-                    {{ classes.price.currency }} {{ classes.price.price }}
+                <div class="ClassesList__block">
+                    <div class="ClassesList__title">time</div>
+
+                    <div>
+                        {{ dateFormat(classes.startTime) }} ~ {{ dateFormat(classes.endTime) }}
+                    </div>
                 </div>
-                <div class="ClassesList__frequency">
-                    <div v-for="frequency in classes.price.priceFrequency" :key="frequency">
-                        {{ frequency }}
+
+                <div class="ClassesList__block">
+                    <div class="ClassesList__title">price</div>
+                    <div>
+                        {{ classes.price.currency }} {{ classes.price.price }}
+                    </div>
+                    <div class="ClassesList__frequency">
+                        <div v-for="frequency in classes.price.priceFrequency" :key="frequency">
+                            {{ frequency }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ClassesList__block">
+                    <div class="ClassesList__title">ages</div>
+                    <div>
+                        {{ classes.ages }}
                     </div>
                 </div>
             </div>
 
-            <div class="ClassesList__block">
-                <div class="ClassesList__title">ages</div>
-                <div>
-                    {{ classes.ages }}
-                </div>
-            </div>
-        </div>
 
+            <div v-else>
+                <ClassesEditor :classes="classes" :isEdit="classes.isEdit" @save="() => classes.isEdit = false" />
+            </div>
+            
             <el-divider />
         </div>
 

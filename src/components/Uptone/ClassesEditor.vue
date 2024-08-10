@@ -9,7 +9,7 @@
                 :on-change="(file) => handleClassesImgChange(file)"
                 :show-file-list="false"
             >
-                <img class="ClassesEditor__previewImg" v-if="props.class.img" :src="props.class.img">
+                <img class="ClassesEditor__previewImg" v-if="props.classes.imageURL" :src="props.classes.imageURL">
                 <template v-else>
                     <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                     <div class="el-upload__text">
@@ -84,6 +84,7 @@
         </div>
 
         <div class="ClassesEditor__save">
+            <el-button type="primary" @click="cancel">Cancel</el-button>
             <el-button type="primary" @click="save">Save</el-button>
         </div>
     </div>
@@ -91,12 +92,12 @@
 
 
 <script setup>
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import { useClassesStore } from "@/stores/classes"
 import { useClassesTypeStore } from "@/stores/classesType";
 
 const props = defineProps({
-    class: {
+    classes: {
         type: Object,
         default: () => ({
             id: '',
@@ -133,12 +134,12 @@ const { postClasses } = useClassesStore();
 const { classesTypeList } = useClassesTypeStore();
 
 const classes = ref({
-    img: props.class.img,
-    classesType: props.class.classesType,
-    title: props.class.title,
-    time: [props.class.startTime, props.class.endTime],
-    price: props.class.price,
-    ages: props.class.ages
+    img: props.classes.imageURL,
+    classesType: props.classes.classesType,
+    title: props.classes.title,
+    time: [props.classes.startTime, props.classes.endTime],
+    price: props.classes.price,
+    ages: props.classes.ages
 })
 
 const handleClassesImgChange = (file) => {
@@ -162,6 +163,21 @@ const save = async () => {
         console.error(error)
     }
 }
+
+const cancel = () => {
+    emit('save')
+}
+
+watch(() => props.isEdit, () => {
+    if (props.isEdit) {
+        classes.value.img = props.classes.imageURL
+        classes.value.classesType = props.classes.classesType
+        classes.value.title = props.classes.title
+        classes.value.time = [props.classes.startTime, props.classes.endTime]
+        classes.value.price = props.classes.price
+        classes.value.ages = props.classes.ages
+    }
+}, { immediate: true })
 </script>
 
 <style lang="scss">

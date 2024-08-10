@@ -7,7 +7,12 @@ export const useClassesTypeStore = defineStore('classesType', () => {
   async function getClassesType() {
     const response = await apiGetClassesType()
 
-    classesTypeList.value = response
+    classesTypeList.value = response.map(classesType => {
+      return {
+        ...classesType,
+        isEdit: false
+      }
+    })
   }
 
   async function postClassesType(classType) {

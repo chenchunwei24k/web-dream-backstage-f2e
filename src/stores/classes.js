@@ -7,23 +7,24 @@ export const useClassesStore = defineStore('classes', () => {
   async function getClasses() {
     const response = await apiGetClasses()
 
-    classesList.value = response
+    classesList.value = response.map(classes => {
+      return {
+        ...classes,
+        isEdit: false
+      }
+    })
   }
 
   async function postClasses(classes) {
-    const response = await apiPostClasses(classes)
+    await apiPostClasses(classes)
 
-    if (response) {
-      getClasses()
-    }
+    await getClasses()
   }
 
   async function deleteClasses(id) {
-    const response = await apiDeleteClasses(id)
+    await apiDeleteClasses(id)
 
-    if (response) {
-      getClasses()
-    }
+    await getClasses()
   }
 
   return { 

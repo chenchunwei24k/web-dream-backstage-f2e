@@ -17,6 +17,7 @@
         </div>
         
         <div class="ClassesTypeEditor__save">
+            <el-button type="primary" @click="cancel">Cancel</el-button>
             <el-button type="primary" @click="save">Save</el-button>
         </div>
     </div>
@@ -73,6 +74,10 @@ const save = async () => {
     } catch (error) {
         console.error(error)
     }
+}
+
+const cancel = () => {
+    emit('save')
 }
 
 watch(() => props.isEdit, () => {
