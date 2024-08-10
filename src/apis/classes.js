@@ -9,9 +9,9 @@ export const apiGetClasses = async () => {
     }
 }
 
-export const apiPostClasses = async () => {
+export const apiPostClasses = async (classes) => {
     try {
-        const response = await axios.post('/api/classes')
+        const response = await axios.post('/api/classes', classes)
         return response.data
     } catch (error) {
         throw error

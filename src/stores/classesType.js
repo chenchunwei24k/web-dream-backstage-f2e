@@ -11,19 +11,15 @@ export const useClassesTypeStore = defineStore('classesType', () => {
   }
 
   async function postClassesType(classType) {
-    const response = await apiPostClassesType(classType)
+    await apiPostClassesType(classType)
 
-    if (response) {
-      getClassType()
-    }
+    await getClassesType()
   }
 
   async function deleteClassesType(id) {
-    const response = await apiDeleteClassesType(id)
+    await apiDeleteClassesType(id)
 
-    if (response) {
-      getClassesType()
-    }
+    await getClassesType()
   }
 
   return { 

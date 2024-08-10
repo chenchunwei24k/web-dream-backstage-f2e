@@ -2,7 +2,7 @@
     <div class="AssociationList">
         <h2>Association</h2>
 
-        <div v-for="association in associationList" :key="association.id">
+        <div v-for="association in associationStore.associationList" :key="association.id">
             <div v-if="!association.isEdit">
                 <div class="AssociationList__block">
                     <div class="AssociationList__title">association image</div>
@@ -12,9 +12,9 @@
                 </div>
 
                 <div class="AssociationList__block">
-                    <div class="AssociationList__title">description</div>
+                    <div class="AssociationList__title">contents</div>
                     <div>
-                        {{ association.description }}
+                        {{ association.contents }}
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@ import { onMounted, ref } from "vue"
 import AssociationEditor from "./AssociationEditor.vue";
 import { useAssociationStore } from "@/stores/association";
 
-const { associationList, getAssociation } = useAssociationStore();
+const associationStore = useAssociationStore();
 
 const isAdding = ref(false);
 
@@ -46,8 +46,8 @@ const toggleAssociationEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
-onMounted(() => {
-    getAssociation();
+onMounted(async () => {
+    await associationStore.getAssociation();
 })
 </script>
 

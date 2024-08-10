@@ -2,8 +2,8 @@
     <div class="ClassesType">
         <h2>ClassesType</h2>
 
-        <div v-for="classesType in classesTypeList" :key="classesType.id">
-            <div v-if="!association.isEdit">
+        <div v-for="classesType in classesTypeStore.classesTypeList" :key="classesType.id">
+            <div v-if="!classesType.isEdit">
                 <div class="ClassesType__block">
                     <div class="ClassesType__title">type</div>
                     <div>
@@ -14,7 +14,7 @@
                 <div class="ClassesType__block">
                     <div class="ClassesType__title">content</div>
                     <div class="ClassesType__content" v-for="info in classesType.content" :key="info">
-                        {{ classesType.info }}
+                        {{ info }}
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@ import { onMounted, ref } from "vue"
 import ClassesTypeEditor from "./ClassesTypeEditor.vue";
 import { useClassesTypeStore } from "@/stores/classesType";
 
-const { classesTypeList, getClassesType } = useClassesTypeStore();
+const classesTypeStore = useClassesTypeStore();
 
 const isAdding = ref(false);
 
@@ -46,8 +46,8 @@ const toggleClassesTypeEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
-onMounted(() => {
-    getClassesType();
+onMounted(async () => {
+   await classesTypeStore.getClassesType();
 })
 </script>
 

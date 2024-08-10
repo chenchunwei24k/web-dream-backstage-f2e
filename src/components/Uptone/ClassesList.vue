@@ -1,7 +1,7 @@
 <template>
     <div class="ClassesEditor">
         <h2>Class</h2>
-        <div v-for="(classes, classesIndex) in classesList" :key="'classes'+classesIndex">
+        <div v-for="(classes, classesIndex) in classesStore.classesList" :key="classes.id">
             <div class="ClassesEditor__block">
                 <div class="ClassesEditor__title">img</div>
                 <div>
@@ -62,7 +62,7 @@ import { ref, onMounted } from "vue"
 import ClassesEditor from "./ClassesEditor.vue";
 import { useClassesStore } from "@/stores/classes"
 
-const { classesList, getClasses } = useClassesStore();
+const classesStore = useClassesStore();
 
 const isAdding = ref(false);
 
@@ -70,8 +70,8 @@ const toggleClassesEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
-onMounted(() => {
-    getClasses();
+onMounted(async () => {
+    await classesStore.getClasses();
 })
 </script>
 
