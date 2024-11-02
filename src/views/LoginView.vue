@@ -23,6 +23,10 @@
         </div>
 
         <div class="Login__block Login__button">
+          <el-button size="large" @click="register">register</el-button>
+        </div>
+
+        <div class="Login__block Login__button">
           <el-button size="large" @click="login">登入</el-button>
         </div>
       </div>
@@ -32,7 +36,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { apiLogin } from "@/apis/auth";
+import { apiLogin, registerAccount } from "@/apis/auth";
 import { ref } from "vue";
 
 const router = useRouter();
@@ -48,6 +52,16 @@ const login = async () => {
     console.error(error);
   }
 };
+
+const register = async () => {
+  try {
+    await registerAccount(username.value, password.value);
+    console.log('register');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 </script>
 
 <style lang="scss">
