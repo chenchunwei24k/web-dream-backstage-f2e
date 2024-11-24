@@ -16,6 +16,11 @@ export const useAccountStore = defineStore('account', () => {
         id: account.id,
         username: account.username,
         password: account.password,
+        firstName: account.firstName,
+        lastName: account.lastName,
+        phone: account.phone,
+        email: account.email,
+        role: account.role,
         isEdit: false
       }
     })

@@ -1,67 +1,68 @@
 <template>
-    <div class="AccountList">
-        <h2>Account</h2>
+    <h2>Semester</h2>
 
-        <table class="table">
-            <thead>
-                <th>Username</th>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Action</th>
-            </thead>
-            <tbody>
-                <tr v-for="account in accountStore.AccountList" :key = "account.id">
-                    <template v-if="account.isEdit">
-                        <AccountEditor :account="account" :is-edit="account.isEdit" @save="() => account.isEdit = false" />
-                    </template>
-                    <template v-else>
-                        <td>{{ account.username }}</td>
-                        <td>{{ account.firstName }}</td>
-                        <td>{{ account.lastName }}</td>
-                        <td>{{ account.phone }}</td>
-                        <td>{{ account.email }}</td>
-                        <td>{{ account.role }}</td>
-                        <td>
-                            <el-button @click="onEdit(account)">Edit</el-button>
-                            <el-button type="primary" @click="onDelete(account.id)">Delete</el-button>
-                        </td>
-                    </template>
-                </tr>
-            </tbody>
-        </table>
+    <table class="table">
+        <thead>
+            <th>Year</th>
+            <th>Semester</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <tr v-for="semester in semesterStore.SemesterList" :key="semester.id">
+                <template v-if="semester.isEdit">
+                    <SemesterEditor :semester="semester" :is-edit="semester.isEdit" @save="() => semester.isEdit = false" />
+                </template>
+                <template v-else>
+                    <td>{{ semester.year }}</td>
+                    <td>{{ semester.semester }}</td>
+                    <td>
+                        <el-button @click="onEdit(semester)">Edit</el-button>
+                        <el-button type="primary" @click="onDelete(semester.id)">Delete</el-button>
+                    </td>
+                </template>
+            </tr>
+        </tbody>
+    </table>
+
+    <div v-if="!isAdding">
+        <el-button type="primary" @click="toggleSemesterEditor">Add Semester</el-button>
     </div>
+    <div v-else>
+        <SemesterEditor @save="toggleSemesterEditor" />
+    </div>
+
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue"
-import AccountEditor from "./AccountEditor.vue";
-import { useAccountStore } from "@/stores/account";
 
-const accountStore = useAccountStore();
+import { onMounted, ref } from "vue"
+import { useSemesterStore } from "@/stores/semester"
+import SemesterEditor from "./SemesterEditor.vue";
+
+const semesterStore = useSemesterStore()
 
 const isAdding = ref(false);
 
-const toggleAccountEditor = () => {
+const toggleSemesterEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
-const onDelete = async (id) => {
-    await accountStore.deleteAccount(id);
-}
-
-onMounted(async () => {
-    await accountStore.getAccount();
+onMounted( async () => {
+    await semesterStore.getSemester()
 })
 
-const onEdit = (account) => {
-    account.isEdit = true
+const onDelete = (id) => {
+    console.log(id)
 }
+
+const onEdit = (semester) => {
+    console.log(semester.id)
+    semester.isEdit = true
+}
+
 </script>
 
-<style lang="scss">
+<style scoped>
 body {
   background: #fafafa url(https://jackrugile.com/images/misc/noise-diagonal.png);
   color: #444;

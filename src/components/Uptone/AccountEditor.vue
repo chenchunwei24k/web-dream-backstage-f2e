@@ -1,42 +1,14 @@
 <template>
-    <div class="AccountEditor">
-        <div class="AccountEditor__block">
-            <div class="AccountEditor__title">account image</div>
-            <div>
-                <el-upload 
-                    drag 
-                    accept="image/*" 
-                    :auto-upload="false"
-                    :on-change="handleAccountChange"
-                    :show-file-list="false"
-                >
-                    <img class="AccountEditor__previewImg" v-if="props.account.img" :src="props.account.img">
-                    <template v-else>
-                        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                        <div class="el-upload__text">
-                        Drop file here or <em>click to upload</em>
-                        </div>
-                    </template>
-                </el-upload>
-            </div>
-        </div>
-
-        <div class="AccountEditor__block">
-            <div class="AccountEditor__title">description</div>
-            <el-input 
-                v-model="description"
-                class="AccountEditor__input" 
-                placeholder="please input description" 
-                type="textarea"
-                :row="5"
-                ></el-input>
-        </div>
-        
-        <div class="AccountEditor__save">
-            <el-button @click="cancel">cancel</el-button>
-            <el-button type="primary" @click="save">Save</el-button>
-        </div>
-    </div>
+    <td><el-input v-model="firstName" type="textarea" :row="5"></el-input></td>
+    <td><el-input v-model="username" type="textarea" :row="5"></el-input></td>
+    <td><el-input v-model="lastName" type="textarea" :row="5"></el-input></td>
+    <td><el-input v-model="phone" type="textarea" :row="5"></el-input></td>
+    <td><el-input v-model="email" type="textarea" :row="5"></el-input></td>
+    <td><el-input v-model="role" type="textarea" :row="5"></el-input></td>
+    <td>
+        <el-button @click="cancel">cancel</el-button>
+        <el-button type="primary" @click="save">Save</el-button>
+    </td>
 </template>
 
 
@@ -45,12 +17,21 @@ import { watch, ref } from "vue";
 import { useAccountStore } from "@/stores/account";
 
 const props = defineProps({
-    Account: {
+    account: {
         type: Object,
         default: () => ({
             id: '',
-            img: '',
-            description: ''
+            username: '',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            email: '',
+            role: [
+                {
+                    id: '',
+                    name: ''
+                }
+            ]
         })
     },
     isEdit: {
@@ -63,26 +44,35 @@ const emit = defineEmits(['save'])
 
 const { postAccount, updateAccount } = useAccountStore();
 
-const bannerImg = ref(null)
+const username = ref(props.account.username);
+const firstName = ref(props.account.firstName);
+const lastName = ref(props.account.lastName);
+const phone = ref(props.account.phone);
+const email = ref(props.account.email);
+const role = ref(props.account.role);
 
-const handleAccountChange = (file) => {
-    bannerImg.value = URL.createObjectURL(file.raw)
-}
-
-const description = ref(props.account.description);
+console.log(props.account)
 
 const save = async () => {
     try {
         if (props.isEdit) {
             await updateAccount({
                 id: props.account.id,
-                imageURL: bannerImg.value,
-                contents: description.value
+                username: username.value,
+                firstName: firstName.value,
+                lastName: lastName.value,
+                phone: phone.value,
+                email: email.value,
+                role: role.value
             })
         } else {
             await postAccount({
-                imageURL: bannerImg.value,
-                contents: description.value
+                username: username.value,
+                firstName: firstName.value,
+                lastName: lastName.value,
+                phone: phone.value,
+                email: email.value,
+                role: role.value
             })
         }
 
@@ -98,7 +88,12 @@ const cancel = () => {
 
 watch(() => props.isEdit, () => {
     if (props.isEdit) {
-        description.value = props.Account.contents
+        username.value = props.account.username
+        firstName.value = props.account.firstName
+        lastName.value = props.account.lastName
+        phone.value = props.account.phone
+        email.value = props.account.email
+        role.value = props.account.role
     }
 }, { immediate: true })
 </script>

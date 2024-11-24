@@ -13,6 +13,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "axios": "^1.7.2",
+    "crud-vue": "^0.1.2",
     "element-plus": "^2.7.3",
     "moment": "^2.30.1",
     "normalize.css": "^8.0.1",
