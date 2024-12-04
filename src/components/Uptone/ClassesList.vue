@@ -12,7 +12,7 @@
             <tbody>
                 <tr v-for="classes in classesStore.classesList" :key="classes.id">
                     <template v-if="classes.isEdit">
-                        <!-- <StudentEditor :student="student" :is-edit="student.isEdit" @save="() => student.isEdit = false" /> -->
+                        <ClassesEditor :classes="classes" :is-edit="classes.isEdit" @save="() => classes.isEdit = false" />
                     </template>
                     <template v-else>
                         <td>{{ classes.major }}</td>
@@ -27,6 +27,13 @@
             </tbody>
         </table>
 
+        <div v-if="!isAdding">
+            <el-button type="primary" @click="toggleClassesEditor">Add Class</el-button>
+        </div>
+        <div v-else>
+            <ClassesEditor @save="toggleClassesEditor" />
+        </div>
+
     </div>
 </template>
 
@@ -35,19 +42,19 @@
 import { ref, onMounted } from "vue"
 import ClassesEditor from "./ClassesEditor.vue";
 import { useClassesStore } from "@/stores/classes"
-import moment from "moment";
+// import moment from "moment";
 
 const classesStore = useClassesStore();
 
 const isAdding = ref(false);
 
-const toggleClassesList = () => {
+const toggleClassesEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
-const dateFormat = (date) => {
-    return moment(date).format("YYYY/MM/DD HH:mm:ss");
-}
+// const dateFormat = (date) => {
+//     return moment(date).format("YYYY/MM/DD HH:mm:ss");
+// }
 
 onMounted(async () => {
     await classesStore.getClasses();

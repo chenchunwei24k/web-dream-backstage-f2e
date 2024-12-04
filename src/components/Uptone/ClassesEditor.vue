@@ -18,21 +18,26 @@ const props = defineProps({
     classes: {
         type: Object,
         default: () => ({
+            id: '',
             major: '',
             name: '',
             description: '',
         })
     },
+    isEdit: {
+        type: Boolean,
+        default: false
+    }
 })
 
-const { postClasses } = useClassesStore();
+const emit = defineEmits(['save'])
+
+const { postClasses, putClasses } = useClassesStore();
 // const { classesTypeList } = useClassesTypeStore();
 
-const classes = ref({
-    major: props.classes.major,
-    name: props.classes.name,
-    description: props.classes.description
-})
+const major = ref(props.classes.major)
+const name = ref(props.classes.name)
+const description = ref(props.classes.description)
 
 // const handleClassesImgChange = (file) => {
 //     classes.value.img = URL.createObjectURL(file.raw)
@@ -40,11 +45,21 @@ const classes = ref({
 
 const save = async () => {
     try {
-        await postClasses({
-            img: classes.value.img,
-            classesType: classes.value.classesType,
-            title: classes.value.title,
-        })
+        if (props.isEdit) {
+            console.log(props.classes.id)
+            await putClasses({
+                id: props.classes.id,
+                major: major.value,
+                name: name.value,
+                description: description.value
+            })
+        } else {
+            await postClasses({
+                major: major.value,
+                name: name.value,
+                description: description.value
+            })
+        }
 
         emit('save')
     } catch (error) {
@@ -58,9 +73,9 @@ const cancel = () => {
 
 watch(() => props.isEdit, () => {
     if (props.isEdit) {
-        classes.value.img = props.classes.imageURL
-        classes.value.classesType = props.classes.classesType
-        classes.value.title = props.classes.title
+        major.value = props.classes.major
+        name.value = props.classes.name
+        description.value = props.classes.description
     }
 }, { immediate: true })
 </script>
