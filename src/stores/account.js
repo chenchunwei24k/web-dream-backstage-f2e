@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { apiGetAccount, apiPostAccount, apiPutAccount, apiDeleteAccount } from '@/apis/account'
+import { apiGetAccount, apiGetTeacherAccount, apiPostAccount, apiPutAccount, apiDeleteAccount } from '@/apis/account'
 
 export const useAccountStore = defineStore('account', () => {
   const accountList = ref([{
@@ -27,10 +27,6 @@ export const useAccountStore = defineStore('account', () => {
   },])
   async function getAccount() {
     const response = await apiGetAccount()
-
-    console.log(response)
-
-    console.log(accountList)
     
     accountList.value = response.map(account => {
       return {
@@ -67,6 +63,55 @@ export const useAccountStore = defineStore('account', () => {
 
   return { 
     AccountList: computed(() => accountList.value),
+    getAccount,
+    postAccount,
+    updateAccount,
+    deleteAccount
+   }
+})
+
+export const useTeacherStore = defineStore('account', () => {
+  const accountList = ref([])
+  async function getAccount() {
+    const response = await apiGetTeacherAccount()
+
+    console.log(response)
+    
+    accountList.value = response.map(account => {
+      return {
+        id: account.id,
+        username: account.username,
+        password: account.password,
+        firstName: account.firstName,
+        lastName: account.lastName,
+        phone: account.phone,
+        email: account.email,
+        role: account.role,
+        isEdit: false
+      }
+    })
+  }
+
+  async function postAccount(account) {
+    await apiPostAccount(account)
+
+    await getAccount()
+  }
+
+  async function updateAccount(account) {
+    await apiPutAccount(account)
+
+    await getAccount()
+  }
+
+  async function deleteAccount(id) {
+    await apiDeleteAccount(id)
+
+    await getAccount()
+  }
+
+  return { 
+    teacherList: computed(() => accountList.value),
     getAccount,
     postAccount,
     updateAccount,

@@ -9,10 +9,6 @@ export const useClassesStore = defineStore('classes', () => {
 
     const response = await apiGetClasses()
 
-    console.log(response)
-
-    console.log(classesList)
-
     classesList.value = response.map( classes => {
       return {
         id: classes.id,

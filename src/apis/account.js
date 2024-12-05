@@ -9,6 +9,15 @@ export const apiGetAccount = async () => {
     }
 }
 
+export const apiGetTeacherAccount = async () => {
+    try {
+        const response = await axios.get('/api/account/teacher')
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export const apiPostAccount = async (account) => {
     try {
         const response = await axios.post('/api/account', account)
