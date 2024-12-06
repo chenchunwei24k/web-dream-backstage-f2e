@@ -25,8 +25,9 @@ import AccountList from "@/components/Uptone/AccountList.vue";
 import StudentList from "@/components/Uptone/StudentList.vue";
 import SemesterList from "@/components/Uptone/SemesterList.vue"
 import SemesterClassList from "@/components/Uptone/SemesterClassList.vue";
+import QuizTypeList from "@/components/Uptone/QuizTypeList.vue";
 
-const pages = ["ClassesType", "Association", "Class", "Account", "Student", "Semester", "SemesterClass"]
+const pages = ["ClassesType", "Association", "Class", "Account", "Student", "Semester", "SemesterClass", "QuizType"]
 
 const selectedPage = ref(null)
 
@@ -38,7 +39,8 @@ const pageComponents = {
   Class: ClassesList,
   Student: StudentList,
   Semester: SemesterList,
-  SemesterClass: SemesterClassList
+  SemesterClass: SemesterClassList,
+  QuizType: QuizTypeList
 }
 
 const selectedPageComponent = computed(()=> {
