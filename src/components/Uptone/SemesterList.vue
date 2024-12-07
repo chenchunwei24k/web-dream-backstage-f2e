@@ -1,69 +1,68 @@
 <template>
-    <div class="ClassesList">
-        <h2>Class</h2>
-        
-        <table class="table">
-            <thead>
-                <th>Major</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Action</th>
-            </thead>
-            <tbody>
-                <tr v-for="classes in classesStore.classesList" :key="classes.id">
-                    <template v-if="classes.isEdit">
-                        <!-- <StudentEditor :student="student" :is-edit="student.isEdit" @save="() => student.isEdit = false" /> -->
-                    </template>
-                    <template v-else>
-                        <td>{{ classes.major }}</td>
-                        <td>{{ classes.name }}</td>
-                        <td>{{ classes.description }}</td>
-                        <td>
-                            <el-button @click="onEdit(classes)">Edit</el-button>
-                            <el-button type="primary" @click="onDelete(classes.id)">Delete</el-button>
-                        </td>
-                    </template>
-                </tr>
-            </tbody>
-        </table>
+    <h2>Semester</h2>
 
+    <table class="table">
+        <thead>
+            <th>Year</th>
+            <th>Semester</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <tr v-for="semester in semesterStore.SemesterList" :key="semester.id">
+                <template v-if="semester.isEdit">
+                    <SemesterEditor :semester="semester" :is-edit="semester.isEdit" @save="() => semester.isEdit = false" />
+                </template>
+                <template v-else>
+                    <td>{{ semester.year }}</td>
+                    <td>{{ semester.semester }}</td>
+                    <td>
+                        <el-button @click="onEdit(semester)">Edit</el-button>
+                        <el-button type="primary" @click="onDelete(semester.id)">Delete</el-button>
+                    </td>
+                </template>
+            </tr>
+        </tbody>
+    </table>
+
+    <div v-if="!isAdding">
+        <el-button type="primary" @click="toggleSemesterEditor">Add Semester</el-button>
     </div>
+    <div v-else>
+        <SemesterEditor @save="toggleSemesterEditor" />
+    </div>
+
 </template>
 
-
 <script setup>
-import { ref, onMounted } from "vue"
-import ClassesEditor from "./ClassesEditor.vue";
-import { useClassesStore } from "@/stores/classes"
-import moment from "moment";
 
-const classesStore = useClassesStore();
+import { onMounted, ref } from "vue"
+import { useSemesterStore } from "@/stores/semester"
+import SemesterEditor from "./SemesterEditor.vue";
+
+const semesterStore = useSemesterStore()
 
 const isAdding = ref(false);
 
-const toggleClassesList = () => {
+const toggleSemesterEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
-const dateFormat = (date) => {
-    return moment(date).format("YYYY/MM/DD HH:mm:ss");
-}
-
-onMounted(async () => {
-    await classesStore.getClasses();
+onMounted( async () => {
+    await semesterStore.getSemester()
 })
 
 const onDelete = (id) => {
     console.log(id)
 }
 
-const onEdit = (classes) => {
-    classes.isEdit = true
+const onEdit = (semester) => {
+    console.log(semester.id)
+    semester.isEdit = true
 }
 
 </script>
 
-<style lang="scss">
+<style scoped>
 body {
   background: #fafafa url(https://jackrugile.com/images/misc/noise-diagonal.png);
   color: #444;

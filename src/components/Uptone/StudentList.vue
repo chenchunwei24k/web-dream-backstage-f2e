@@ -1,69 +1,79 @@
 <template>
-    <div class="ClassesList">
-        <h2>Class</h2>
-        
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <div class="StudentList">
+        <h2>Student</h2>
+
         <table class="table">
             <thead>
-                <th>Major</th>
-                <th>Name</th>
-                <th>Description</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>Birth</th>
                 <th>Action</th>
             </thead>
             <tbody>
-                <tr v-for="classes in classesStore.classesList" :key="classes.id">
-                    <template v-if="classes.isEdit">
-                        <!-- <StudentEditor :student="student" :is-edit="student.isEdit" @save="() => student.isEdit = false" /> -->
+                <tr v-for="student in studentStore.StudentList" :key="student.id">
+                    <template v-if="student.isEdit">
+                        <StudentEditor :student="student" :is-edit="student.isEdit" @save="() => student.isEdit = false" />
                     </template>
                     <template v-else>
-                        <td>{{ classes.major }}</td>
-                        <td>{{ classes.name }}</td>
-                        <td>{{ classes.description }}</td>
+                        <td>{{ student.firstName }}</td>
+                        <td>{{ student.lastName }}</td>
+                        <td>{{ student.address }}</td>
+                        <td>{{ student.birth }}</td>
                         <td>
-                            <el-button @click="onEdit(classes)">Edit</el-button>
-                            <el-button type="primary" @click="onDelete(classes.id)">Delete</el-button>
+                            <el-button @click="onEdit(student)">Edit</el-button>
+                            <el-button type="primary" @click="onDelete(student.id)">Delete</el-button>
                         </td>
                     </template>
                 </tr>
             </tbody>
         </table>
 
+        <div v-if="!isAdding">
+            <el-button type="primary" @click="toggleStudentEditor">Add Student</el-button>
+        </div>
+        <div v-else>
+            <StudentEditor @save="toggleStudentEditor" />
+        </div>
+
+
     </div>
 </template>
 
-
 <script setup>
-import { ref, onMounted } from "vue"
-import ClassesEditor from "./ClassesEditor.vue";
-import { useClassesStore } from "@/stores/classes"
-import moment from "moment";
 
-const classesStore = useClassesStore();
+import { onMounted, ref } from "vue"
+import { useStudentStore } from "@/stores/student"
+import StudentEditor from "./StudentEditor.vue"
+
+const studentStore = useStudentStore()
 
 const isAdding = ref(false);
 
-const toggleClassesList = () => {
+const toggleStudentEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
-const dateFormat = (date) => {
-    return moment(date).format("YYYY/MM/DD HH:mm:ss");
-}
-
-onMounted(async () => {
-    await classesStore.getClasses();
+onMounted( async () => {
+    await studentStore.getStudent()
 })
 
 const onDelete = (id) => {
     console.log(id)
 }
 
-const onEdit = (classes) => {
-    classes.isEdit = true
+const onEdit = (student) => {
+    student.isEdit = true
+}
+
+const onCancel = (student) => {
+    student.isEdit = false
 }
 
 </script>
 
-<style lang="scss">
+<style scoped>
 body {
   background: #fafafa url(https://jackrugile.com/images/misc/noise-diagonal.png);
   color: #444;
@@ -173,4 +183,5 @@ tbody:hover tr:hover td {
   color: #444;
   text-shadow: 0 1px 0 #fff;
 }
+
 </style>

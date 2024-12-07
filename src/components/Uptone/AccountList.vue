@@ -1,66 +1,64 @@
 <template>
-    <div class="ClassesList">
-        <h2>Class</h2>
-        
+    <div class="AccountList">
+        <h2>Account</h2>
+
         <table class="table">
             <thead>
-                <th>Major</th>
-                <th>Name</th>
-                <th>Description</th>
+                <th>Username</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Role</th>
                 <th>Action</th>
             </thead>
             <tbody>
-                <tr v-for="classes in classesStore.classesList" :key="classes.id">
-                    <template v-if="classes.isEdit">
-                        <!-- <StudentEditor :student="student" :is-edit="student.isEdit" @save="() => student.isEdit = false" /> -->
+                <tr v-for="account in accountStore.AccountList" :key = "account.id">
+                    <template v-if="account.isEdit">
+                        <AccountEditor :account="account" :is-edit="account.isEdit" @save="() => account.isEdit = false" />
                     </template>
                     <template v-else>
-                        <td>{{ classes.major }}</td>
-                        <td>{{ classes.name }}</td>
-                        <td>{{ classes.description }}</td>
+                        <td>{{ account.username }}</td>
+                        <td>{{ account.firstName }}</td>
+                        <td>{{ account.lastName }}</td>
+                        <td>{{ account.phone }}</td>
+                        <td>{{ account.email }}</td>
+                        <td>{{ account.role }}</td>
                         <td>
-                            <el-button @click="onEdit(classes)">Edit</el-button>
-                            <el-button type="primary" @click="onDelete(classes.id)">Delete</el-button>
+                            <el-button @click="onEdit(account)">Edit</el-button>
+                            <el-button type="primary" @click="onDelete(account.id)">Delete</el-button>
                         </td>
                     </template>
                 </tr>
             </tbody>
         </table>
-
     </div>
 </template>
 
-
 <script setup>
-import { ref, onMounted } from "vue"
-import ClassesEditor from "./ClassesEditor.vue";
-import { useClassesStore } from "@/stores/classes"
-import moment from "moment";
+import { onMounted, ref } from "vue"
+import AccountEditor from "./AccountEditor.vue";
+import { useAccountStore } from "@/stores/account";
 
-const classesStore = useClassesStore();
+const accountStore = useAccountStore();
 
 const isAdding = ref(false);
 
-const toggleClassesList = () => {
+const toggleAccountEditor = () => {
     isAdding.value = !isAdding.value;
 }
 
-const dateFormat = (date) => {
-    return moment(date).format("YYYY/MM/DD HH:mm:ss");
+const onDelete = async (id) => {
+    await accountStore.deleteAccount(id);
 }
 
 onMounted(async () => {
-    await classesStore.getClasses();
+    await accountStore.getAccount();
 })
 
-const onDelete = (id) => {
-    console.log(id)
+const onEdit = (account) => {
+    account.isEdit = true
 }
-
-const onEdit = (classes) => {
-    classes.isEdit = true
-}
-
 </script>
 
 <style lang="scss">

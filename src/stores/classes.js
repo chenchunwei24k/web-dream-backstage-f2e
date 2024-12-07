@@ -9,7 +9,9 @@ export const useClassesStore = defineStore('classes', () => {
 
     classesList.value = response.map(classes => {
       return {
-        ...classes,
+        major: classes.major,
+        name: classes.name,
+        description: classes.description,
         isEdit: false
       }
     })
