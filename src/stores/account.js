@@ -3,7 +3,28 @@ import { defineStore } from 'pinia'
 import { apiGetAccount, apiPostAccount, apiPutAccount, apiDeleteAccount } from '@/apis/account'
 
 export const useAccountStore = defineStore('account', () => {
-  const accountList = ref([])
+  const accountList = ref([{
+    id: '1',
+    username: 'X',
+    password: 'S',
+    firstName: 'SD',
+    lastName: 'DSDSD',
+    phone: '',
+    email: '',
+    role: '',
+    isEdit: false
+  },
+  {
+    id: '2',
+    username: 'X',
+    password: 'S',
+    firstName: 'SD',
+    lastName: 'DSDSD',
+    phone: '',
+    email: '',
+    role: '',
+    isEdit: false
+  },])
   async function getAccount() {
     const response = await apiGetAccount()
 

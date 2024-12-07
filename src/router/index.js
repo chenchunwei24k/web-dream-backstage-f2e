@@ -9,37 +9,33 @@ const routes = setupLayouts([
     component: LoginView,
   },
   {
-    path: "/page-data",
-    name: "PageData",
-    component: () => import("../views/PageDataView.vue"),
+    path: "/accounts",
+    name: "Accounts",
+    component: () => import("../views/AccountsView.vue"),
     meta: {
       layout: "MainLayout",
     },
   },
   {
-    path: "/user-data",
+    path: "/accounts/:accountId",
+    name: "AccountDetail",
+    component: () => import("../views/AccountDetailView.vue"),
+    meta: {
+      layout: "MainLayout",
+    },
+  },
+  {
+    path: "/semesters",
     name: "UserData",
-    component: () => import("../views/UserDataView.vue"),
+    component: () => import("../views/SemestersView.vue"),
     meta: {
       layout: "MainLayout",
     },
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: () => import("../views/DashboardView.vue"),
-    meta: {
-      layout: "MainLayout",
-    },
-  },
-  {
-    path: "/settings",
-    name: "Settings",
-    component: () => import("../views/SettingsView.vue"),
-    meta: {
-      layout: "MainLayout",
-    },
-  },
+    path: '/:pathMatch(.*)',
+    redirect: { name: 'Accounts' }
+  }
 ]);
 
 const router = createRouter({

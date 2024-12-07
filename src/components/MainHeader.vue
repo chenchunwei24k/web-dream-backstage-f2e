@@ -4,23 +4,6 @@
       <div class="MainHeader__logo">
         <img src="@/assets/images/logo.jpg" alt="" />
       </div>
-
-      <div>
-        <el-dropdown>
-          <span class="el-dropdown-link">
-            Application
-            <el-icon class="el-icon--right">
-              <arrow-down />
-            </el-icon>
-          </span>
-          <template v-slot:dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>Uptone music</el-dropdown-item>
-              <el-dropdown-item>Our music time</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
     </div>
 
     <div class="MainHeader__right">

@@ -3,7 +3,9 @@
     <MainHeader></MainHeader>
     <div class="Main__container">
       <MainSidebar></MainSidebar>
-      <router-view class="Main__content"></router-view>
+      <div class="Main__content">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>

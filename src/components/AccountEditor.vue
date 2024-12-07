@@ -1,14 +1,30 @@
 <template>
-    <td><el-input v-model="firstName" type="textarea" :row="5"></el-input></td>
-    <td><el-input v-model="username" type="textarea" :row="5"></el-input></td>
-    <td><el-input v-model="lastName" type="textarea" :row="5"></el-input></td>
-    <td><el-input v-model="phone" type="textarea" :row="5"></el-input></td>
-    <td><el-input v-model="email" type="textarea" :row="5"></el-input></td>
-    <td><el-input v-model="role" type="textarea" :row="5"></el-input></td>
-    <td>
-        <el-button @click="cancel">cancel</el-button>
-        <el-button type="primary" @click="save">Save</el-button>
-    </td>
+    <div>
+        <el-table-column prop="Username" label="姓名" min-width="100px" align="center">
+            <template #default><el-input v-model="firstName" type="textarea" :row="5"></el-input></template>
+        </el-table-column>
+        <el-table-column prop="FirstName" label="名" align="center">
+            <template #default><el-input v-model="lastName" type="textarea" :row="5"></el-input></template>
+        </el-table-column>
+        <el-table-column prop="LastName" label="姓" align="center">
+            <template #default><el-input v-model="phone" type="textarea" :row="5"></el-input></template>
+        </el-table-column>
+        <el-table-column prop="Phone" label="手機" min-width="180px" align="center">
+            <template #default><el-input v-model="email" type="textarea" :row="5"></el-input></template>
+        </el-table-column>
+        <el-table-column prop="Email" label="信箱" min-width="180px" align="center">
+            <template #default><el-input v-model="role" type="textarea" :row="5"></el-input></template>
+        </el-table-column>
+        <el-table-column prop="Role" label="角色" align="center">
+            <template #default><el-input v-model="role" type="textarea" :row="5"></el-input></template>
+        </el-table-column>
+        <el-table-column label="Action" align="center">
+            <template #default>
+                <el-button @click="cancel">cancel</el-button>
+                <el-button type="primary" @click="save">Save</el-button>
+            </template>
+        </el-table-column>
+    </div>
 </template>
 
 

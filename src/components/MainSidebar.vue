@@ -6,18 +6,18 @@
       :router="true"
       default-active="1"
     >
-      <el-menu-item index="1" :route="{ name: 'PageData' }">
+      <el-menu-item index="1" :route="{ name: 'accounts' }">
         <el-icon>
           <List />
         </el-icon>
-        <span>Page data</span>
+        <span>帳號管理</span>
       </el-menu-item>
 
-      <el-menu-item index="2" :route="{ name: 'UserData' }">
+      <el-menu-item index="2" :route="{ name: 'semesters' }">
         <el-icon>
           <User />
         </el-icon>
-        <span>User data</span>
+        <span>學期管理</span>
       </el-menu-item>
 
       <el-menu-item index="3" :route="{ name: 'Dashboard' }">
