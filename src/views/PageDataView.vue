@@ -29,8 +29,9 @@ import QuizTypeList from "@/components/Uptone/QuizTypeList.vue";
 import QuizList from "@/components/Uptone/QuizList.vue";
 import SemesterClassStudentList from "@/components/Uptone/SemesterClassStudentList.vue";
 import ScoreList from "@/components/Uptone/ScoreList.vue";
+import RollCallList from "@/components/Uptone/RollCallList.vue";
 
-const pages = ["ClassesType", "Association", "Class", "Account", "Student", "Semester", "SemesterClass", "QuizType", "Quiz", "SemesterClassStudent", "Score"]
+const pages = ["ClassesType", "Association", "Class", "Account", "Student", "Semester", "SemesterClass", "QuizType", "Quiz", "SemesterClassStudent", "Score", "RollCall"]
 
 const selectedPage = ref(null)
 
@@ -46,7 +47,8 @@ const pageComponents = {
   QuizType: QuizTypeList,
   Quiz: QuizList,
   SemesterClassStudent: SemesterClassStudentList,
-  Score: ScoreList
+  Score: ScoreList,
+  RollCall: RollCallList
 }
 
 const selectedPageComponent = computed(()=> {
